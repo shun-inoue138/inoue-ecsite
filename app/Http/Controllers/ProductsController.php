@@ -9,8 +9,23 @@ class ProductsController extends Controller
 {
     public function index(Request $request)
     {
-        $products = Product::paginate(6);
-        return view('products/index', ['products' => $products]);
+        unset($message);
+        if ($request->has('search_keyword')) {
+            $products = Product::where('name', 'like', '%' . $request->get('search_keyword') . '%')->paginate(6);
+            //$productsはコレクション型のためisEmpty()で分岐
+            if ($products->isEmpty()) {
+                $message = '該当する商品はありませんでした。';
+            } else {
+                $message = '条件に合う商品を表示しました。';
+            }
+            return view('products/index', ['products' => $products])->with('message',$message);
+
+        }
+        else{
+            $products = Product::paginate(6);
+            return view('products/index', ['products' => $products]);
+
+        }
     }
 
 }
