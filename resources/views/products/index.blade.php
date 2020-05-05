@@ -32,7 +32,7 @@
                                             <li class="list-group">価格：{{ $product->price }}円</li>
                                             <li class="list-group">在庫数：{{ $product->stock }}</li>
                                         </ul>
-                                        <a href="#" class="btn btn-primary">詳細</a>
+                                        <a href="/{{ $product -> id }}" class="btn btn-primary">詳細</a>
                                         <a href="#" class="btn btn-primary">カートに入れる</a>
                                     </div>
                                 </div>
@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            {{ $products->links() }}
+            {{ $products->appends(['search_keyword' => Request::get('search_keyword')])->links() }}
         </div>
     </div>
 
