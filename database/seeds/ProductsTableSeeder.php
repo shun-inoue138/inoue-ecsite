@@ -15,7 +15,7 @@ class ProductsTableSeeder extends Seeder
         DB::table('products')->truncate();
         for ($i=0;$i<100;$i++){
             DB::table('products')->insert([
-                'name' => '"サンプル".$i',
+                'name' => $i,
                 'description' => 'サンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプルサンプル',
                 'img_path' => '',
                 'price' => mt_rand(300,10000),
