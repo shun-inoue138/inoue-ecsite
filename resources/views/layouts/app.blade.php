@@ -71,7 +71,16 @@
                 </div>
             </div>
         </nav>
-
+        @if(session('success_flash_message'))
+            <div class="alert alert-success">
+                {{ session('success_flash_message') }}
+            </div>
+        @endif
+        @if(Session::has('failure_flash_message'))
+            <div class="alert alert-danger">
+                {{ session('failure_flash_message') }}
+            </div>
+        @endif
         <main class="py-4">
             @yield('content')
         </main>
