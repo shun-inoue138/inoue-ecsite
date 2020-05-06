@@ -13,7 +13,17 @@
                         <li class="list-group">在庫数：{{ $product->stock }}</li>
                         <li class="list-group">説明文：{{ $product->description }}</li>
                     </ul>
-                    <a href="#" class="btn btn-primary">カートに入れる</a>
+                    <form action="/cart" method="post" class="form-inline">
+                        @csrf
+                        <select name="quantity" class="form-control">
+                            <option selected>1</option>
+                            @for($i=2;$i<10;$i++)
+                                <option>{{$i}}</option>
+                            @endfor
+                        </select>
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <button type="submit" class="btn btn-primary ">カートに入れる</button>
+                    </form>
                 </div>
             </div>
             <div class="col-12">

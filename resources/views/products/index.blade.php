@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+{{--
+    @php
+        $a = App\product::find(5);
+        var_dump(compact($a));
+    @endphp
+--}}
 
     <div class="container">
         <div class="row">
@@ -15,8 +21,6 @@
                     </form>
                     <div class="col-12">検索結果</div>
                     <h3>{{ $message ?? '' }}</h3>
-
-
                 </div>
 
             </div>
@@ -33,7 +37,18 @@
                                             <li class="list-group">在庫数：{{ $product->stock }}</li>
                                         </ul>
                                         <a href="/{{ $product -> id }}" class="btn btn-primary">詳細</a>
-                                        <a href="#" class="btn btn-primary">カートに入れる</a>
+                                        <form action="/cart" method="post" class="form-inline">
+                                            @csrf
+                                            <select name="quantity" class="form-control">
+                                                <option selected>1</option>
+                                            @for($i=2;$i<10;$i++)
+                                                <option>{{$i}}</option>
+                                            @endfor
+                                            </select>
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <button type="submit" class="btn btn-primary ">カートに入れる</button>
+                                        </form>
+
                                     </div>
                                 </div>
                             </div>
