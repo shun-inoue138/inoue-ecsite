@@ -10,7 +10,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-3">
+            <div class="col-3" style="background-color:#ffffff ;">
                 <div class="row justify-content-center align-items-center">
                     <form method="get" class="col-12">
                         <div class="form-group">
@@ -20,7 +20,7 @@
                         </div>
                     </form>
                     <div class="col-12">検索結果</div>
-                    <h3>{{ $message ?? '' }}</h3>
+                    <h5>{{ $message ?? '' }}</h5>
                 </div>
 
             </div>

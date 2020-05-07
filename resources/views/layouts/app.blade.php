@@ -18,6 +18,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- font awesome CDN--}} -->
+    <script src="https://kit.fontawesome.com/a4fbe79a69.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="app">
@@ -37,7 +39,7 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-aut align-items-center">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -65,6 +67,11 @@
                                         @csrf
                                     </form>
                                 </div>
+                            </li>
+                            <li class="nav-item">
+                                <a href={{route('cart')}}>
+                                    <i class="fas fa-shopping-cart"></i>
+                                </a>
                             </li>
                         @endguest
                     </ul>
