@@ -17,6 +17,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::post('/cart', 'CartsController@in')->name('in');
+Route::get('/cart', 'CartsController@index')->name('cart');
+Route::delete('/cart', 'CartsController@decrease')->name('decrease');
 Route::get('/', 'ProductsController@index')->name('home');
-Route::get('/{id}', 'ProductsController@detail')->name('detail');
-Route::post('/cart', 'cartsController@In')->name('In');
+Route::get('/{id}', 'productsController@detail')->name('detail');
+
