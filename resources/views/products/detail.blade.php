@@ -11,6 +11,7 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group">価格：{{ $product->price }}円</li>
                         <li class="list-group">在庫数：{{ $product->stock }}</li>
+                        <li class="list-group">カテゴリ-：{{ $product->category->name }}</li>
                         <li class="list-group">説明文：{{ $product->description }}</li>
                     </ul>
                     <form action="/cart" method="post" class="form-inline">

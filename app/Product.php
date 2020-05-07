@@ -10,7 +10,7 @@ class product extends Model
         'name','description','price','img_path','category_id','stock'
     ];
 
-    public function product()
+    public function category()
     {
         return $this->belongsTo('\App\Category');
     }
