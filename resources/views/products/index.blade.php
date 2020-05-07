@@ -1,12 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-{{--
-    @php
-        $a = App\product::find(5);
-        var_dump(compact($a));
-    @endphp
---}}
 
     <div class="container">
         <div class="row">
