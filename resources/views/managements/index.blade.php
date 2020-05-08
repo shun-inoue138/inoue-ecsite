@@ -1,22 +1,28 @@
 @extends('layouts.management')
 
 @section('content')
+
+
+
     <div class="container">
+        <div class="row">
+            <h3>
+                <a href="/management/new">新しく商品を登録する</a>
+            </h3>
+        </div>
         <div class="row">
             <div class="col-3" style="background-color:#ffffff ;">
                 <div class="row justify-content-center align-items-center">
 
-                    <a class="col-12" href="{{route('new.page')}}">新しく商品を登録する</a>
-
                     <form method="get" class="col-12">
                         <div class="form-group">
-                            <label>キーワード</label>
-                            <input type="text" size="20" name="search_keyword"　class="form-control">
-                            <button type="submit" class="btn btn-info">検索</button>
+                            <label for="search">商品名検索</label>
+                            <input id="search" type="text" size="20" name="search_keyword"　class="form-control">
+                            <button type="submit" class="btn btn-info">GO</button>
                         </div>
                     </form>
-                    <div class="col-12">検索結果</div>
-                    <h5>{{ $message ?? '' }}</h5>
+                    <h5 class="col-11">{{ $message ?? 'ここに検索結果が表示されます' }}</h5>
+                    <a class="col-11"　href="/management">商品をすべて表示する</a>
                 </div>
 
             </div>
@@ -35,11 +41,12 @@
                                     </ul>
                                     <a href="/management/{{$product->id}}" class="btn btn-primary">内容確認</a>
                                     <a href="/management/{{$product->id}}/edit" class="btn btn-light">編集</a>
-                                    <form action="/management/{{$product->id}}/delete" method="post" class="form-inline">
+                                    <form action="/management/{{$product->id}}/delete" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
+{{--                                        TODO：以下一文不要？--}}
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <button type="submit" class="btn btn-danger ">削除</button>
+                                        <button type="submit" class="btn btn-danger" onclick='return confirm("削除しますか？");'>削除</button>
                                     </form>
 
                                 </div>

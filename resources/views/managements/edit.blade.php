@@ -10,6 +10,7 @@
                     <div class="card-body">
                         <form method="POST" action="/management/{{$product_to_edit->id}}/edit">
                             @csrf
+                            @method('put')
 
                             <div class="form-group row">
                                 <label for="name" class="col-2">商品名</label>
@@ -58,7 +59,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="stock" class="col-2 ">在庫</label>
+                                <label for="stock" class="col-2 ">在庫数</label>
 
                                 <div class="col-10">
                                     <input id="stock" type="text" class="form-control @error('stock') is-invalid @enderror" name="stock" value="{{ $product_to_edit->stock}}"  autofocus>

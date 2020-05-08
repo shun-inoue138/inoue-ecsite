@@ -28,14 +28,25 @@ class ManagementsController extends Controller
     }
 
 
-    public function detail($id,Product $product)
+    public function detail($id)
     {
-
+        $product = Product::find($id);
+        return view('managements/detail', ['product' => $product]);
     }
 
-    public function edit(Product $product,Request $request)
+    public function edit($id,Product $product,Request $request)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|integer|min:1',
+            'description' => 'string|max:300',
+            'stock' => 'required|min:0',
+        ]);
 
+        $product_to_edit = $product->find($id);
+        $product_to_edit->fill($request->all())->save();
+
+        return redirect('/management')->with('success_flash_message', '更新が完了しました');
     }
 
     public function editPage($id,Product $product)
@@ -44,8 +55,10 @@ class ManagementsController extends Controller
         return view('managements/edit', ['product_to_edit' => $product_to_edit]);
     }
 
-    public function delete(Product $product,Request $request)
+    public function delete($id,Product $product)
     {
+        $product->find($id)->delete();
+        return redirect('/management')->with('success_flash_message', '削除が完了しました');
 
     }
 
@@ -61,7 +74,7 @@ class ManagementsController extends Controller
 
         $product->fill($request->all())->save();
 
-        return redirect('/management/new')->with('success_flash_message', '登録が完了しました');
+        return redirect('/management')->with('success_flash_message', '登録が完了しました');
     }
 
     public function newPage()

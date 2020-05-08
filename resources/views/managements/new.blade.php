@@ -58,7 +58,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="stock" class="col-2 ">在庫</label>
+                                <label for="stock" class="col-2 ">在庫数</label>
 
                                 <div class="col-10">
                                     <input id="stock" type="text" class="form-control @error('stock') is-invalid @enderror" name="stock" value="{{ old('stock')}}"  autofocus>
