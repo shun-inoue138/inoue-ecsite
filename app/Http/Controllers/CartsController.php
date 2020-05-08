@@ -58,4 +58,10 @@ class CartsController extends Controller
     //③'/cart'にリダイレクトした際にCartsContoroller＠indexが走り、画面に表示されるquantityが修正される
         return redirect('/cart');
     }
+
+    public function complete()
+    {
+       //todo:購入ボタン押下後の処理（画面遷移とカートテーブルの削除）
+    }
+
 }
