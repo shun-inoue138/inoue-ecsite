@@ -16,14 +16,14 @@
                     </ul>
                     <form action="/cart" method="post" class="form-inline">
                         @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <button type="submit" class="btn btn-dark ">カートに入れる</button>
                         <select name="quantity" class="form-control">
                             <option selected>1</option>
                             @for($i=2;$i<10;$i++)
                                 <option>{{$i}}</option>
                             @endfor
                         </select>
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <button type="submit" class="btn btn-primary ">カートに入れる</button>
                     </form>
                 </div>
             </div>

@@ -8,13 +8,13 @@
                 <div class="row justify-content-center align-items-center">
                     <form method="get" class="col-12">
                         <div class="form-group">
-                            <label>キーワード</label>
-                            <input type="text" size="20" name="search_keyword"　class="form-control">
-                            <button type="submit" class="btn btn-info">検索</button>
+                            <label for="search">商品名検索</label>
+                            <input id="search" type="text" size="20" name="search_keyword"　class="form-control">
+                            <button type="submit" class="btn btn-info">GO</button>
                         </div>
                     </form>
-                    <div class="col-12">検索結果</div>
-                    <h5>{{ $message ?? '' }}</h5>
+                    <h5 class="col-11">{{ $message ?? 'ここに検索結果が表示されます' }}</h5>
+                    <a class="col-11" href="/">商品をすべて表示する</a>
                 </div>
 
             </div>
@@ -32,16 +32,16 @@
                                             <li class="list-group">カテゴリー：{{ $product->category->name }}</li>
                                         </ul>
                                         <a href="/{{ $product -> id }}" class="btn btn-primary">詳細</a>
-                                        <form action="/cart" method="post" class="form-inline">
+                                        <form action="/cart" method="post" class="form-inline d-inline">
                                             @csrf
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <button type="submit" class="btn btn-dark text-white ">カートに入れる</button>
                                             <select name="quantity" class="form-control">
                                                 <option selected>1</option>
-                                            @for($i=2;$i<10;$i++)
-                                                <option>{{$i}}</option>
-                                            @endfor
+                                                @for($i=2;$i<10;$i++)
+                                                    <option>{{$i}}</option>
+                                                @endfor
                                             </select>
-                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                            <button type="submit" class="btn btn-primary ">カートに入れる</button>
                                         </form>
 
                                     </div>
