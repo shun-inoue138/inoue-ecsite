@@ -17,14 +17,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/management/new', 'ManagementsController@newPage')->name('new.page');
+Route::post('/management/new', 'ManagementsController@new')->name('new');
+Route::get('/management', 'ManagementsController@index')->name('management.top');
+Route::get('/management/{id}', 'ManagementsController@detail')->name('management.detail');
+Route::put('/management/{id}/edit', 'ManagementsController@edit')->name('edit');
+Route::get('/management/{id}/edit', 'ManagementsController@editPage')->name('edit.page');
+Route::delete('/management/{id}/delete', 'ManagementsController@delete')->name('delete');
+
 Route::post('/cart', 'CartsController@in')->name('in');
 Route::get('/cart', 'CartsController@index')->name('cart');
 Route::delete('/cart', 'CartsController@decrease')->name('decrease');
-Route::get('/', 'ProductsController@index')->name('product_list');
+
+Route::get('/', 'ProductsController@index')->name('product.list');
 Route::get('/{id}', 'ProductsController@detail')->name('detail');
-Route::get('/management', 'ManagementsController@index')->name('management_top');
-Route::get('/management/{id}', 'ManagementsController@detail')->name('management_detail');
-Route::put('/management/{id}/edit', 'ManagementsController@edit')->name('edit');
-Route::delete('/management/{id}/delete', 'ManagementsController@delete')->name('delete');
-Route::post('/management/new', 'ManagementsController@new')->name('new');
 

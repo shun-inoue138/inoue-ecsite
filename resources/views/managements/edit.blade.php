@@ -1,58 +1,108 @@
-@extends('managements.app')
+@extends('layouts.management')
 
 @section('content')
-
     <div class="container">
-        <div class="row">
-            <div class="col-3" style="background-color:#ffffff ;">
-                <div class="row justify-content-center align-items-center">
-                    <form method="get" class="col-12">
-                        <div class="form-group">
-                            <label>キーワード</label>
-                            <input type="text" size="20" name="search_keyword"　class="form-control">
-                            <button type="submit" class="btn btn-info">検索</button>
-                        </div>
-                    </form>
-                    <div class="col-12">検索結果</div>
-                    <h5>{{ $message ?? '' }}</h5>
-                </div>
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header">商品編集</div>
 
-            </div>
-            <div class="col-9">
-                <div class="row justify-content-center align-items-center">
-                        @foreach($products as $product)
-                            <div class="col-6 mb-2">
-                                <div class="card">
-                                    <img class="card-img-top" src="" alt="">
-                                    <div class="card-header">商品名：{{ $product->name }}</div>
-                                    <div class="card-body">
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group">価格：{{ $product->price }}円</li>
-                                            <li class="list-group">在庫数：{{ $product->stock }}</li>
-                                        </ul>
-                                        <a href="/{{ $product -> id }}" class="btn btn-primary">詳細</a>
-                                        <form action="/cart" method="post" class="form-inline">
-                                            @csrf
-                                            <select name="quantity" class="form-control">
-                                                <option selected>1</option>
-                                            @for($i=2;$i<10;$i++)
-                                                <option>{{$i}}</option>
-                                            @endfor
-                                            </select>
-                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                            <button type="submit" class="btn btn-primary ">カートに入れる</button>
-                                        </form>
+                    <div class="card-body">
+                        <form method="POST" action="/management/{{$product_to_edit->id}}/edit">
+                            @csrf
 
-                                    </div>
+                            <div class="form-group row">
+                                <label for="name" class="col-2">商品名</label>
+
+                                <div class="col-10">
+                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $product_to_edit->name }}" autofocus>
+
+                                    @error('title')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
-                        @endforeach
+
+                            <div class="form-group row">
+                                <label for="category_id" class="col-2 ">カテゴリー名</label>
+
+                                <div class="col-10">
+                                    <select id="category_id" type="text" class="form-control @error('category_id') is-invalid @enderror" name="category_id" autofocus>
+                                        @foreach(config('category') as $key => $value)
+                                            <option @if($product_to_edit->category_id === $key) selected @endif value="{{$key}}">{{ $value }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('category_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label for="price" class="col-2 ">価格</label>
+
+                                <div class="col-10">
+                                    <input id="price" type="text" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ $product_to_edit->price}}"  autofocus>
+
+                                    @error('price')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="stock" class="col-2 ">在庫</label>
+
+                                <div class="col-10">
+                                    <input id="stock" type="text" class="form-control @error('stock') is-invalid @enderror" name="stock" value="{{ $product_to_edit->stock}}"  autofocus>
+
+                                    @error('stock')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="description" class="col-2 ">説明文</label>
+
+                                <div class="col-10">
+                                    <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ $product_to_edit->description }}"  autofocus>
+
+                                    @error('description')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row ">
+                                <div class="col-6 offset-10" >
+                                    <button type="submit" class="btn btn-light">
+                                        更新する
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <a href="/management">商品一覧に戻る</a>
                 </div>
             </div>
-        </div>
-        <div class="row justify-content-center">
-            {{ $products->appends(['search_keyword' => Request::get('search_keyword')])->links() }}
+
         </div>
     </div>
-
 @endsection
+
+
