@@ -63,13 +63,13 @@
                                 <label for="tmp_img_path" class="col-2 ">写真</label>
 
                                 <div class="col-10">
-                                    <img class="form-control-static" width="200" height="130" src=" {{ $confirmed_data['read_tmp_img_path'] }} ">
+                                    <img class="form-control-static" width="300" height="300" src=" {{ $confirmed_data['read_tmp_img_path'] }} ">
 {{--                                    <input id="tmp_img_path" type="hidden" name="tmp_img_path" value="{{ $confirmed_data['read_tmp_img_path'] }}">--}}
                                 </div>
                             </div>
 
                             <div class="form-group row ">
-                                <div class="col-6 offset-10" >
+                                <div class="col-6 offset-8" >
                                     <button type="submit" class="btn btn-primary">
                                         確定する
                                     </button>
