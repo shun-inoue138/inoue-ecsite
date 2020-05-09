@@ -89,6 +89,7 @@
                                 <div class="form-group row">
                                     <label for="photo" class="col-2 ">写真</label>
 
+                                    {{-- TODO:写真の選択が保持されるようにする。--}}
                                     <div class="col-10">
                                         <input id="photo" type="file" class=" @error('photo') is-invalid @enderror" name="photo" value="{{ old('photo') }}"  autofocus>
 
@@ -101,7 +102,7 @@
                                 </div>
 
                             <div class="form-group row ">
-                                <div class="col-6 offset-10" >
+                                <div class="col-6 offset-8" >
                                     <button type="submit" class="btn btn-primary"　name="confirm_type" value="new">
                                         入力内容を確認する
                                     </button>
