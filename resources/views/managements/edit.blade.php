@@ -8,9 +8,8 @@
                     <div class="card-header">商品編集</div>
 
                     <div class="card-body">
-                        <form method="POST" action="/management/{{$product_to_edit->id}}/edit/confirm" enctype="multipart/form-data"　>
+                        <form method="POST" action="/management/{{$product_to_edit->id}}/edit/confirm" enctype="multipart/form-data">
                             @csrf
-                            @method('put')
 
                             <div class="form-group row">
                                 <label for="name" class="col-2">商品名</label>
@@ -102,8 +101,8 @@
                             </div>
 
                             <div class="form-group row ">
-                                <div class="col-6 offset-10" >
-                                    <button type="submit" class="btn btn-light" name="edit_confirm" value="edit_confirm">
+                                <div class="col-6 offset-8" >
+                                    <button type="submit" class="btn btn-light" name="confirm_type" value="edit">
                                         入力内容を確認する
                                     </button>
                                 </div>

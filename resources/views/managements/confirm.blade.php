@@ -1,7 +1,6 @@
 @extends('layouts.management')
 
 @section('content')
-    @php    var_dump($confirmed_data);    @endphp
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-8">
@@ -10,8 +9,7 @@
 
                     <div class="card-body">
 {{--                        本画面の遷移元画面が「新規登録」か「更新」かによって分岐--}}
-                        <form method="POST" action="{{--@if(session('new_confirm')) --}}/management/new/complete"{{-- @elseif(session('edit_confirm'))/management/{{$confirmed_data['id']}}/edit/complete " @endif--}}>
-{{--                            TODO:なぜか出力されてしまう--}}
+                        <form method="POST" action="@if($confirmed_data['confirm_type'] ==='new') /management/new/complete @elseif($confirmed_data['confirm_type'] ==='edit') /management/{{$confirmed_data['id']}}/edit/complete @else /management @endif" >
                             @csrf
 
                             <div class="form-group row">
@@ -78,9 +76,9 @@
                                 </div>
                             </div>
                         </form>
-{{--                        <a href="@if(session('new_confirm'))/management/new @else /management/{{$confirmed_data['id']}}/edit @endif">--}}
-{{--                            <button class="btn btn-light">修正する</button>--}}
-{{--                        </a>--}}
+                        <a href="@if($confirmed_data['confirm_type'] ==='new') /management/new @elseif($confirmed_data['confirm_type'] ==='edit') /management/{{$confirmed_data['id']}}/edit @else /management @endif">
+                            <button class="btn btn-light">修正する</button>
+                        </a>
                     </div>
                 </div>
                 </div>
@@ -91,5 +89,3 @@
 
         </div>
 @endsection
-
-

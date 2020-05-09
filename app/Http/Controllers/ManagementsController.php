@@ -35,19 +35,54 @@ class ManagementsController extends Controller
         return view('managements/detail', ['product' => $product]);
     }
 
-    public function edit($id,Product $product,Request $request)
+    public function editConfirm($id,Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|integer|min:1',
             'description' => 'string|max:300',
             'stock' => 'required|min:0',
+            'photo' => 'required|image',
+
         ]);
 
+        $data_except_photo = $request->except('photo');
+        $photo = $request->file('photo');
+
+        $category_array = config('category');
+        $category_name = $category_array[$data_except_photo['category_id']];
+
+        $tmp_img_path = $photo->store('public/tmp');
+        $read_tmp_img_path = str_replace('public/', '/storage/', $tmp_img_path);
+
+        $confirmed_data = array_merge($data_except_photo,['id' => $id, 'category_name' => $category_name, 'tmp_img_path' => $tmp_img_path ,'read_tmp_img_path' => $read_tmp_img_path ]);
+
+        $request->session()->put('confirmed_data',$confirmed_data);
+
+        return view('managements/confirm',['confirmed_data' => $confirmed_data]);
+    }
+
+    public function editComplete($id,Product $product,Request $request)
+    {
+        $confirmed_data = $request->session()->get('confirmed_data');
+
+        $tmp_img_path = $confirmed_data['tmp_img_path'];
+        $read_tmp_img_path = $confirmed_data['read_tmp_img_path'];
+        $file_name = str_replace('public/tmp/', '', $tmp_img_path);
+        $storage_path = 'public/product_image/'.$file_name;
+
+        $request->session()->forget('confirmed_data');
+
+        Storage::move($tmp_img_path, $storage_path);
+        $read_img_path = str_replace('public/', '/storage/', $storage_path);
+
         $product_to_edit = $product->find($id);
+        $product_to_edit->img_path = $read_img_path;
         $product_to_edit->fill($request->all())->save();
 
         return redirect('/management')->with('success_flash_message', '更新が完了しました');
+
+
     }
 
     public function editPage($id,Product $product)
@@ -63,26 +98,6 @@ class ManagementsController extends Controller
 
     }
 
-    public function newComplete(Product $product,Request $request)
-    {
-        $confirmed_data = $request->session()->get('confirmed_data');
-
-        $tmp_img_path = $confirmed_data['tmp_img_path'];
-        $read_tmp_img_path = $confirmed_data['read_tmp_img_path'];
-        $file_name = str_replace('public/temp/', '', $tmp_img_path);
-        $storage_path = '/storage/app/public/product_image/'.$file_name;
-
-        $request->session()->forget('confirmed_data');
-
-        Storage::move($tmp_img_path, $storage_path);
-        $read_img_path = str_replace('/storage/app/public/', '/storage/', $storage_path);
-
-        $product->img_path = $read_img_path;
-        $product->fill($request->all())->save();
-
-        return redirect('/management')->with('success_flash_message', '登録が完了しました');
-    }
-
     public function newConfirm(Request $request)
     {
         $request->validate([
@@ -90,7 +105,7 @@ class ManagementsController extends Controller
             'price' => 'required|integer|min:1',
             'description' => 'string|max:300',
             'stock' => 'required|min:0',
-            'photo' => 'image',
+            'photo' => 'required|image',
 
         ]);
 
@@ -109,6 +124,28 @@ class ManagementsController extends Controller
 
         return view('managements/confirm',['confirmed_data' => $confirmed_data]);
     }
+
+    public function newComplete(Product $product,Request $request)
+    {
+        $confirmed_data = $request->session()->get('confirmed_data');
+
+        $tmp_img_path = $confirmed_data['tmp_img_path'];
+        $read_tmp_img_path = $confirmed_data['read_tmp_img_path'];
+        $file_name = str_replace('public/tmp/', '', $tmp_img_path);
+        $storage_path = 'public/product_image/'.$file_name;
+
+        $request->session()->forget('confirmed_data');
+
+        Storage::move($tmp_img_path, $storage_path);
+        $read_img_path = str_replace('public/', '/storage/', $storage_path);
+
+        $product->img_path = $read_img_path;
+        $product->fill($request->all())->save();
+
+        return redirect('/management')->with('success_flash_message', '登録が完了しました');
+    }
+
+
 
     public function newPage()
     {

@@ -102,7 +102,7 @@
 
                             <div class="form-group row ">
                                 <div class="col-6 offset-10" >
-                                    <button type="submit" class="btn btn-primary"　name="new_confirm" value="new_confirm">
+                                    <button type="submit" class="btn btn-primary"　name="confirm_type" value="new">
                                         入力内容を確認する
                                     </button>
                                 </div>
