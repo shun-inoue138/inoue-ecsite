@@ -3,7 +3,6 @@
 @section('content')
 
 
-
     <div class="container">
         <div class="row">
             <h3>
@@ -31,7 +30,7 @@
                     @foreach($products as $product)
                         <div class="col-6 mb-2">
                             <div class="card">
-                                <img class="card-img-top" src="" alt="">
+                                <img class="card-img-top" src="{{ $product->img_path }}" alt="">
                                 <div class="card-header">商品名：{{ $product->name }}</div>
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">

@@ -8,7 +8,7 @@
                     <div class="card-header">商品登録</div>
 
                     <div class="card-body">
-                        <form method="POST" action="/management/new">
+                        <form method="POST" action="/management/new/confirm" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group row">
@@ -64,32 +64,46 @@
                                     <input id="stock" type="text" class="form-control @error('stock') is-invalid @enderror" name="stock" value="{{ old('stock')}}"  autofocus>
 
                                     @error('stock')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
 
                             </div>
 
-                                    <div class="form-group row">
-                                <label for="description" class="col-2 ">説明文</label>
+                                <div class="form-group row">
+                                    <label for="description" class="col-2 ">説明文</label>
 
-                                <div class="col-10">
-                                    <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}"  autofocus>
+                                    <div class="col-10">
+                                        <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}"  autofocus>
 
-                                    @error('description')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                        @error('description')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
+
+                                <div class="form-group row">
+                                    <label for="photo" class="col-2 ">写真</label>
+
+                                    <div class="col-10">
+                                        <input id="photo" type="file" class=" @error('photo') is-invalid @enderror" name="photo" value="{{ old('photo') }}"  autofocus>
+
+                                        @error('photo')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
 
                             <div class="form-group row ">
                                 <div class="col-6 offset-10" >
-                                    <button type="submit" class="btn btn-primary">
-                                        登録する
+                                    <button type="submit" class="btn btn-primary"　name="new_confirm" value="new_confirm">
+                                        入力内容を確認する
                                     </button>
                                 </div>
                             </div>

@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center align-item-around">
             <div class="card col-12">
-                <img class="card-img-top" src="" alt="">
+                <img class="card-img-top" src="{{ $product->img_path}}" alt="">
                 <div class="card-header">商品名：{{ $product->name }}</div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
