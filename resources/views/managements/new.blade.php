@@ -1,11 +1,12 @@
 @extends('layouts.management')
 
 @section('content')
+{{-- TODO：確認画面の「修正ボタン」から当新規登録画面に遷移すると直前の入力内容が表示されない--}}
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-8">
                 <div class="card">
-                    <div class="card-header">商品登録</div>
+                    <div class="card-header">商品新規登録</div>
 
                     <div class="card-body">
                         <form method="POST" action="/management/new/confirm" enctype="multipart/form-data">
