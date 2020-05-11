@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('name','50');
             $table->string('description','300');
             $table->integer('price');
-            $table->string('img_path','100')->nullable();
+            $table->string('img_path','300')->nullable();
             $table->integer('category_id');
             $table->integer('stock');
 
