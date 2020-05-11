@@ -20,6 +20,12 @@ class CreateCartsTable extends Migration
             $table->integer('product_id');
             $table->integer('quantity');
         });
+
+        DB::table('carts')->insert([
+            'user_id' => '1',
+            'product_id' => '1',
+            'quantity' => '3',
+        ]);
     }
 
     /**

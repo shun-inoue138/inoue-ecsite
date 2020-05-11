@@ -24,14 +24,17 @@ class CreateProductsTable extends Migration
             $table->integer('stock');
 
         });
+        for ($i=0;$i<20;$i++){
+            DB::table('products')->insert([
+                'name' => 'サンプルプロダクト',
+                'description' => 'サンプルサンプルサンプル',
+                'price' => '1000',
+                'category_id' => '1',
+                'stock' => '10',
+            ]);
+        }
 
-        DB::table('products')->insert([
-            'name' => 'サンプルプロダクト',
-            'description' => 'サンプルサンプルサンプル',
-            'price' => '1000',
-            'category_id' => '1',
-            'stock' => '10',
-        ]);
+
     }
 
     /**
