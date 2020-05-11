@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class CartsController extends Controller
 {
-    public function index()
+    public function index(Cart $cart)
     {
         $user_id = Auth::id();
         //「カートからひとつ削除ボタン」を押下した際、quntityが0になったらビューにデータを送らないようにする
-        $products_in_cart = Cart::where('user_id',$user_id)->where('quantity','>',0)->get();
+        $products_in_cart = $cart->where('user_id',$user_id)->where('quantity','>',0)->get();
         return view('carts/index', ['products_in_cart' => $products_in_cart]);
     }
 

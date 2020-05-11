@@ -18,6 +18,12 @@ class CreateCategoriesTable extends Migration
             $table->timestamps();
             $table->string('name', '50');
         });
+
+        DB::table('categories')->insert([
+            ['name' => 'ブレスレット'],
+            ['name' => 'ネックレス'],
+            ['name' => 'マフラー'],
+        ]);
     }
 
     /**
