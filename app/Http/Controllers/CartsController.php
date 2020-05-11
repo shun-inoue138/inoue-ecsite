@@ -17,7 +17,7 @@ class CartsController extends Controller
         return view('carts/index', ['products_in_cart' => $products_in_cart]);
     }
 
-    public function in(Request $request)
+    public function in(Request $request,Cart $cart)
     {
         $product = Product::find($request->post('product_id'));
         if ($product->stock < $request->post('quantity')){
@@ -25,13 +25,13 @@ class CartsController extends Controller
             return redirect('/')->with('failure_flash_message',$failure_flash_message);
         }
 
-        Cart::updateOrCreate(
+        $cart->updateOrCreate(
             [
                 'user_id' => Auth::id(),
                 'product_id' => $request->post('product_id'),
             ],
             [
-                'quantity' => \DB::raw('quantity + ' . $request->post('quantity') ),
+                'quantity' => ($cart->quantity + $request->post('quantity') ),
             ]
             );
             $success_flash_message = 'カートに商品を追加しました。';
