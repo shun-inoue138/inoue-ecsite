@@ -12,7 +12,7 @@ class ManagementsController extends Controller
     {
         unset($message);
         if ($request->has('search_keyword')) {
-            $products = Product::where('name', 'like', '%' . $request->get('search_keyword') . '%')->orderBy('updated_at','desc')->paginate(6);
+            $products = Product::where('name', 'like', '%' . $request->get('search_keyword') . '%')->orderBy('created_at','desc')->paginate(6);
             //$productsはコレクション型のためisEmpty()で分岐
             if ($products->isEmpty()) {
                 $message = '該当する商品はありませんでした。';
@@ -23,7 +23,7 @@ class ManagementsController extends Controller
 
         }
         else {
-            $products = $product->orderBy('updated_at','desc')->paginate(6);
+            $products = $product->orderBy('created_at','desc')->paginate(6);
             return view('managements/index', ['products' => $products]);
         }
     }
@@ -42,43 +42,34 @@ class ManagementsController extends Controller
             'price' => 'required|integer|min:1',
             'description' => 'string|max:300',
             'stock' => 'required|min:0',
-//            'photo' => 'required|image',
+            'photo' => 'required|image',
 
         ]);
 
         $data_except_photo = $request->except('photo');
-//        $photo = $request->file('photo');
+        $posted_photo = $request->file('photo');
 
+//todo        ＄requestで送られてきたカテゴリidをカテゴリ名に変換している。もっと簡潔な方法を探す。
         $category_array = config('category');
         $category_name = $category_array[$data_except_photo['category_id']];
 
-//        $tmp_img_path = $photo->store('public/tmp');
-//        $read_tmp_img_path = str_replace('public/', '/storage/', $tmp_img_path);
+//todo        ここでs3の指定バケットへ画像アップロードが完了するが、「確認画面」にて修正ボタン等が押下された場合は当ファイルを削除したい。
+        $path = Storage::disk('s3')->putFile('product-photo', $posted_photo, 'public');
 
-        $confirmed_data = array_merge($data_except_photo,['id' => $id, 'category_name' => $category_name, /* 'tmp_img_path' => $tmp_img_path ,'read_tmp_img_path' => $read_tmp_img_path */ ]);
+        // アップロードした画像のフルパスを取得
+        $full_path = Storage::disk('s3')->url($path);
 
-        $request->session()->put('confirmed_data',$confirmed_data);
+        $posted_data = array_merge($data_except_photo,['id' => $id,'category_name' => $category_name,'full_path' => $full_path  ]);
 
-        return view('managements/confirm',['confirmed_data' => $confirmed_data]);
+        return view('managements/confirm',['posted_data' => $posted_data]);
     }
 
     public function editComplete($id,Product $product,Request $request)
     {
-//        $confirmed_data = $request->session()->get('confirmed_data');
-
-//        $tmp_img_path = $confirmed_data['tmp_img_path'];
-//        $read_tmp_img_path = $confirmed_data['read_tmp_img_path'];
-//        $file_name = str_replace('public/tmp/', '', $tmp_img_path);
-//        $storage_path = 'public/product_image/'.$file_name;
-
-        $request->session()->forget('confirmed_data');
-
-//        Storage::move($tmp_img_path, $storage_path);
-//        $read_img_path = str_replace('public/', '/storage/', $storage_path);
-
         $product_to_edit = $product->find($id);
-//        $product_to_edit->img_path = $read_img_path;
-        $product_to_edit->fill($request->all())->save();
+        $product_to_edit->fill($request->all());
+        $product_to_edit->img_path = $request->post('full_path');
+        $product_to_edit->save();
 
         return redirect('/management')->with('success_flash_message', '更新が完了しました');
 
@@ -130,19 +121,6 @@ class ManagementsController extends Controller
     public function newComplete(Product $product,Request $request)
     {
 
-
-
-//        $tmp_img_path = $confirmed_data['tmp_img_path'];
-//        $read_tmp_img_path = $confirmed_data['read_tmp_img_path'];
-//        $file_name = str_replace('public/tmp/', '', $tmp_img_path);
-//        $storage_path = 'public/product_image/'.$file_name;
-
-//        $request->session()->forget('confirmed_data');
-
-//        Storage::move($tmp_img_path, $storage_path);
-//        $read_img_path = str_replace('public/', '/storage/', $storage_path);
-
-//        $product->img_path = $read_img_path;
         $product->fill($request->all());
         $product->img_path = $request->post('full_path');
         $product->save();

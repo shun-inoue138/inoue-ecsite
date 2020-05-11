@@ -86,10 +86,10 @@
                                 </div>
                             </div>
 
-                            {{--<div class="form-group row">
+                            <div class="form-group row">
                                 <label for="photo" class="col-2 ">写真</label>
 
-                                --}}{{-- TODO:写真の選択が保持されるようにする。--}}{{--
+{{--                                 TODO:写真の選択が保持されるようにする。--}}
                                 <div class="col-10">
                                     <input id="photo" type="file" class=" @error('photo') is-invalid @enderror" name="photo" value="{{ $product_to_edit->photo }}"  autofocus>
 
@@ -99,7 +99,7 @@
                                     </span>
                                     @enderror
                                 </div>
-                            </div>--}}
+                            </div>
 
                             <div class="form-group row ">
                                 <div class="col-6 offset-8" >
