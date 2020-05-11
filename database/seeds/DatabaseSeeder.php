@@ -17,13 +17,3 @@ class DatabaseSeeder extends Seeder
     }
 }
 
-DB::table('categories')->truncate();
-DB::table('categories')->insert([
-    'name' => 'ブレスレット'
-]);
-DB::table('categories')->insert([
-    'name' => 'ネックレス'
-]);
-DB::table('categories')->insert([
-    'name' => 'マフラー'
-]);
