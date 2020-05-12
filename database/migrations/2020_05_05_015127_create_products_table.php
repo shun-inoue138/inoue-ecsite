@@ -24,7 +24,8 @@ class CreateProductsTable extends Migration
             $table->integer('stock');
 
         });
-        for ($i=0;$i<20;$i++){
+        DB::table('products')->truncate();
+        for ($i=0;$i<8;$i++){
             DB::table('products')->insert([
                 'name' => 'サンプルプロダクト',
                 'description' => 'サンプルサンプルサンプル',
