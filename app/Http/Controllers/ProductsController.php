@@ -11,7 +11,7 @@ class ProductsController extends Controller
     {
         unset($message);
         if ($request->has('search_keyword')) {
-            $products = Product::where('name', 'like', '%' . $request->get('search_keyword') . '%')->orderBy('created_at','desc')->paginate(6);
+            $products = Product::where('name', 'like', '%' . $request->get('search_keyword') . '%')/*->orderBy('created_at','desc')*/->paginate(6);
             //$productsはコレクション型のためisEmpty()で分岐
             if ($products->isEmpty()) {
                 $message = '該当する商品はありませんでした。';
@@ -22,7 +22,7 @@ class ProductsController extends Controller
 
         }
         else{
-            $products = Product::orderBy('created_at','desc')->paginate(6);
+            $products = Product::/*orderBy('created_at','desc')->*/paginate(6);
             return view('products/index', ['products' => $products]);
 
         }

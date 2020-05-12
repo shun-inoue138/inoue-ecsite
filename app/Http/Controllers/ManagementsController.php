@@ -12,7 +12,7 @@ class ManagementsController extends Controller
     {
         unset($message);
         if ($request->has('search_keyword')) {
-            $products = Product::where('name', 'like', '%' . $request->get('search_keyword') . '%')->orderBy('updated_at','desc')->paginate(6);
+            $products = Product::where('name', 'like', '%' . $request->get('search_keyword') . '%')/*->orderBy('updated_at','desc')*/->paginate(6);
             //$productsはコレクション型のためisEmpty()で分岐
             if ($products->isEmpty()) {
                 $message = '該当する商品はありませんでした。';
@@ -23,7 +23,7 @@ class ManagementsController extends Controller
 
         }
         else {
-            $products = $product->orderBy('updated_at','desc')->paginate(6);
+            $products = $product/*->orderBy('updated_at','desc')*/->paginate(6);
             return view('managements/index', ['products' => $products]);
         }
     }

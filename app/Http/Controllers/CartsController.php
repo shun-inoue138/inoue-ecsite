@@ -35,7 +35,6 @@ class CartsController extends Controller
             ]
             );
             $success_flash_message = 'カートに商品を追加しました。';
-
             $product->stock -= $request->post('quantity');
             $product->save();
 
